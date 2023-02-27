@@ -1,0 +1,57 @@
+	Suppose your friend, Asif, is going to be admitted into a hospital. As a patient, he must provide his name, birth year, age, address, phone number, gender and blood group.Besides, he has to make an appointment with a doctor and pay medical fees. 
+
+//
+public class Patient {
+    private final String name;
+    private final int birthYear;
+    private final int age;
+    private final String address;
+    private final String phoneNumber;
+    private final String gender;
+    private final String bloodGroup;
+    private final double medicalFees;
+    private final String date;
+
+    public Patient(String name, int birthYear, String address, String phoneNumber,
+                   String gender, String bloodGroup, double medicalFees, String date) {
+        this.name = name;
+        this.birthYear = birthYear;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.bloodGroup = bloodGroup;
+        this.medicalFees = medicalFees;
+        this.date = date;
+        this.age = calculateAge(birthYear);
+    }
+
+    public void providePersonalInformation() {
+        System.out.println("Name: " + name);
+        System.out.println("Birth Year: " + birthYear);
+        System.out.println("Age: " + age);
+        System.out.println("Address: " + address);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Gender: " + gender);
+        System.out.println("Blood Group: " + bloodGroup);
+        System.out.println("Medical Fees: " + medicalFees);
+    }
+
+    public void makeAppointment() {
+        System.out.println("Appointment made for " + date);
+    }
+
+    public void payMedicineFees() {
+        System.out.println("Medicine fees paid: " + medicalFees);
+    }
+
+    private int calculateAge(int birthYear) {
+        int currentYear = java.time.Year.now().getValue();
+        return currentYear - birthYear;
+    }
+    public static void main(String[] args) {
+        Patient asif = new Patient("Asif", 2002, "12/2 Dhaka", "1626537428", "Male", "A+", 1000.0, "27-02//2023");
+        asif.providePersonalInformation();
+        asif.makeAppointment();
+        asif.payMedicineFees();
+    }
+}
