@@ -1,0 +1,192 @@
+  DIUTransportManagementSystem
++main(args: String[]): void
+UML
+
+
+DIUTransportManagement
+-main(args: String[])
+
+
+    DIUTransportApp
+-main(args: String[])
+	
+
+
+
+
+                   Bus
+-busName: String
+-busNumber: String
+ -capacity: int    
+ -hasAC: boolean   
++getBusName(): String  
++getBusNumber(): Strin 
++getCapacity(): int    
++hasAC(): boolean
+BusDestination
+-destination: String
+
+
+
+   FacultyBus
+-bus: Bus    
+-destination: BusDestination
+
+
+
+
+
+StudentBus
+-bus: Bus    
+-destination: BusDestination
+ScheduleApp  
+-schedule: BusSchedule
+
+
+
+
+BusSchedule
+-buses: List<Bus>
++addBus(bus: Bus): void 
++displaySchedule():void
+
+
+
+CODE
+import java.util.ArrayList;
+import java.util.List;
+
+public class DIUTransportManagementSystem {
+    public static void main(String[] args) {
+        System.out.println("Welcome to DIU Transport Management System!");
+
+        // Create bus destinations
+        BusDestination dhanmondiDestination = new BusDestination("Dhanmondi");
+        BusDestination uttaraDestination = new BusDestination("Uttara");
+        BusDestination tongiDestination = new BusDestination("Tongi");
+        BusDestination savarDestination = new BusDestination("Savar");
+        BusDestination narayonganjDestination = new BusDestination("Narayonganj");
+
+        // Create buses
+        Bus sujarmukhiBus = new Bus("SUJARMUKHI", "S001", 40, false);
+        Bus dolphinBus = new Bus("DOLPHIN", "S002", 35, false);
+        Bus rajunigandaBus = new Bus("RAJUNIGANDA", "F001", 25, true);
+
+        // Create student buses
+        StudentBus studentBus1 = new StudentBus(sujarmukhiBus, dhanmondiDestination);
+        StudentBus studentBus2 = new StudentBus(dolphinBus, dhanmondiDestination);
+
+        // Create faculty bus
+        FacultyBus facultyBus = new FacultyBus(rajunigandaBus, uttaraDestination);
+
+        // Create bus schedule
+        BusSchedule busSchedule = new BusSchedule();
+        busSchedule.addBus(studentBus1.getBus());
+        busSchedule.addBus(studentBus2.getBus());
+        busSchedule.addBus(facultyBus.getBus());
+
+        // Display bus schedule
+        System.out.println("----- Bus Schedule -----");
+        busSchedule.displaySchedule();
+    }
+}
+
+class Bus {
+    private String busName;
+    private String busNumber;
+    private int capacity;
+    private boolean hasAC;
+
+    public Bus(String busName, String busNumber, int capacity, boolean hasAC) {
+        this.busName = busName;
+        this.busNumber = busNumber;
+        this.capacity = capacity;
+        this.hasAC = hasAC;
+    }
+
+    public String getBusName() {
+        return busName;
+    }
+
+    public String getBusNumber() {
+        return busNumber;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public boolean hasAC() {
+        return hasAC;
+    }
+}
+
+class BusDestination {
+    private String destination;
+
+    public BusDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+}
+
+class BusSchedule {
+    private List<Bus> buses;
+
+    public BusSchedule() {
+        buses = new ArrayList<>();
+    }
+
+    public void addBus(Bus bus) {
+        buses.add(bus);
+    }
+
+    public void displaySchedule() {
+        for (Bus bus : buses) {
+            System.out.println("Bus Name: " + bus.getBusName());
+            System.out.println("Bus Number: " + bus.getBusNumber());
+            System.out.println("Capacity: " + bus.getCapacity());
+            System.out.println("Has AC: " + (bus.hasAC() ? "Yes" : "No"));
+            System.out.println();
+        }
+    }
+}
+
+class StudentBus {
+    private Bus bus;
+    private BusDestination destination;
+
+    public StudentBus(Bus bus, BusDestination destination) {
+        this.bus = bus;
+        this.destination = destination;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public BusDestination getDestination() {
+        return destination;
+    }
+}
+
+class FacultyBus {
+    private Bus bus;
+    private BusDestination destination;
+
+    public FacultyBus(Bus bus, BusDestination destination) {
+        this.bus = bus;
+        this.destination = destination;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public BusDestination getDestination() {
+        return destination;
+    }
+}
